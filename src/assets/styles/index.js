@@ -59,6 +59,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingLeft: 0,
         paddingRight: size.xx_big,
+    },
+    details: {
+        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        width: screenWidth - 40,
+        minHeight: screenHeight - 650,
+        alignSelf: 'center',
+        position: 'absolute',
+        zIndex: 1,
+        top: screenHeight - 300,
+        padding: size.small
     }
 
 
