@@ -3,9 +3,12 @@ import { View, Text, Image } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { playing, star } from "./src/components/Icon";
+
 import NowPlaying from "./src/Screen/NowPlaying";
 import TopRated from "./src/Screen/TopRated";
+import PlayingDetails from "./src/Screen/PlayingDetails";
+
+import { playing, star } from "./src/components/Icon";
 import { size, colors } from "./src/components/Utils"
 
 export default function App() {
@@ -24,13 +27,11 @@ export default function App() {
           })}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={{ paddingTop: size.small }}>
-                <Image source={playing} style={{ height: size.xx_medium, width: size.x_medium, alignSelf: 'center', tintColor: focused ? colors.black : colors.grey }}
+              <View>
+                <Image source={playing} style={{ height: size.x_medium, width: size.medium, alignSelf: 'center', tintColor: focused ? colors.black : colors.grey }}
                   resizeMode='contain'
                 />
-                <View>
-                  <Text style={{ textAlign: 'center', color: focused ? colors.black : colors.grey, fontSize: size.xxx_tiny }}>{"Now Playing"}</Text>
-                </View>
+                <Text style={{ textAlign: 'center', color: focused ? colors.black : colors.grey, fontSize: size.xxx_tiny }}>{"Now Playing"}</Text>
               </View>
             )
           }}
@@ -44,8 +45,8 @@ export default function App() {
           })}
           options={{
             tabBarIcon: ({ focused }) => (
-              <View style={{ paddingTop: size.small }}>
-                <Image source={star} style={{ height: size.xx_medium, width: size.x_medium, alignSelf: 'center', tintColor: focused ? colors.black : colors.grey }}
+              <View>
+                <Image source={star} style={{ height: size.x_medium, width: size.medium, alignSelf: 'center', tintColor: focused ? colors.black : colors.grey }}
                   resizeMode='contain'
                 />
                 <View>
@@ -64,6 +65,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="DashboardNavigation" screenOptions={{ headerShown: false }} >
         <Stack.Screen name="DashboardNavigation" component={DashboardNavigation} options={{ gestureEnabled: false }} />
+        <Stack.Screen name="PlayingDetails" component={PlayingDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   )

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, Text, Image, TouchableOpacity } from 'react-native';
-import { search } from './Icon';
-import { colors, screenWidth, size } from './Utils';
+import { cancel, search } from './Icon';
+import { colors, normalize, size } from './Utils';
+import styles from '../assets/styles';
 
-const Header = () => {
+const Header = ({ textValue = () => { } }) => {
     const [values, setvalues] = useState('');
     const [isFocused, setisFocused] = useState(false);
 
@@ -14,38 +15,49 @@ const Header = () => {
         setisFocused(true);
     }
     const onChangeHandler = (value) => {
+        textValue(value)
         setvalues(value);
     }
-console.log(isFocused)
+    console.log('values', values)
     return (
-        <View style={{ backgroundColor: colors.indian_yellow, height: size.xxx_medium, position: 'relative' }}>
-            <TextInput
-                style={{ height: size.x_normal, borderRadius: size.tiny, backgroundColor: colors.white, width: isFocused ? screenWidth - 100 : screenWidth - 40, alignSelf: isFocused ? 'flex-start' : 'center', marginLeft: isFocused ? 25 : 0, paddingLeft: isFocused ? 25 : 0 }}
-                value={values}
-                onChangeText={onChangeHandler}
-                autoCorrect={false}
-                onBlur={onBlurHandler}
-                onFocus={handleFocus}
-                onPressIn={handleFocus}
-            />
-            {
-                isFocused === true && (
-                    <TouchableOpacity style={{ position: 'absolute', alignSelf: 'flex-end', paddingRight: 20, paddingTop: size.x_tiny }} onPress={() => { onBlurHandler() ,setvalues('') }}>
-                        <Text>{'Cancel'}</Text>
-                    </TouchableOpacity>
-                )
-            }
-            <View style={{ position: 'absolute', alignSelf: isFocused ? 'flex-start' : 'center', paddingTop: size.tiny, paddingLeft: isFocused ? 30 : 0, paddingRight: 70 }}>
-                <Image source={search} style={{ width: size.small, height: size.small, tintColor: colors.grey }} />
+        <View style={styles.header}>
+            <View style={{ height: size.medium }}>
+                <TextInput
+                    style={[styles.textfield, isFocused ? styles.isfocused : styles.notIsFocused]}
+                    value={values}
+                    onChangeText={onChangeHandler}
+                    autoCorrect={false}
+                    onBlur={onBlurHandler}
+                    onFocus={handleFocus}
+                    onPressIn={handleFocus}
+                    caretHidden={isFocused ? false : true}
+                />
+                {
+                    isFocused === true && (
+                        <TouchableOpacity style={styles.headerCancel} onPress={() => { onBlurHandler(), setvalues('') }}>
+                            <Text>{'Cancel'}</Text>
+                        </TouchableOpacity>
+                    )
+                }
+                {
+                    values !== '' && (
+                        <TouchableOpacity style={[isFocused ? styles.focusedCancelImage : styles.CancelImage]} onPress={() => { setvalues('') }}>
+                            <Image source={cancel} style={{ width: size.small, height: size.small, tintColor: colors.grey }} />
+                        </TouchableOpacity>
+                    )
+                }
+
+                {
+                    isFocused === false && (
+                        <View style={styles.placeholder}>
+                            <Text style={{ color: colors.grey }}>{'Search'}</Text>
+                        </View>
+                    )
+                }
+                <View style={[isFocused ? styles.focusHeaderSearch : styles.HeaderSearch, { bottom: values !== '' ? normalize(54) : normalize(40) }]}>
+                    <Image source={search} style={{ width: size.small, height: size.small, tintColor: colors.grey }} />
+                </View>
             </View>
-            <View style={{ paddingHorizontal: 3 }} />
-            {
-                isFocused === false && (
-                    <View style={{ position: 'absolute', paddingTop: size.tiny, flexDirection: 'row', alignSelf: 'center' }}>
-                        <Text style={{ color: colors.grey }}>{'Search'}</Text>
-                    </View>
-                )
-            }
         </View>
     )
 }

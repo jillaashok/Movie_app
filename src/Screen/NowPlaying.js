@@ -1,11 +1,19 @@
-import React from 'react'
-import { View, Text, SafeAreaView } from 'react-native'
-import Container from '../components/Container'
-import Header from '../components/Header'
+import React, { useState } from 'react'
+import Container from '../components/Container';
+import Movie from '../components/Movie';
 
 const NowPlaying = () => {
+    const [text, settext] = useState('');
+    const parentCallback = (value) => {
+        settext(value)
+    }
     return (
-        <Container/>
+        <Container parentCallback={(val) => { parentCallback(val) }}>
+            <Movie
+                Url={'https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed'}
+                filterdata={text}
+            />
+        </Container>
     )
 }
 export default NowPlaying

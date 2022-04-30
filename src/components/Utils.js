@@ -22,6 +22,10 @@ export const colors = {
 }
 
 export const size = {
+    xxx_big: normalize(100),
+    xx_big: normalize(72),
+    x_big: normalize(64),
+    normal_big: normalize(59),
     big: normalize(47),
     xxx_medium: normalize(45),
     xx_medium: normalize(40),
